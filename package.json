@@ -1,0 +1,45 @@
+{
+  "name": "paperstack-c-server",
+  "version": "1.0.0",
+  "description": "Paperstack for creators server file ",
+  "main": "index.js",
+  "scripts": {
+    "test": "  mocha  --timeout 15000 --compilers js:babel-core/register server/tests --recursive",
+    "build": "babel ./server -d ./build/server",
+    "start": "npm run build && node ./build/server",
+    "dev": "nodemon --exec babel-node server/index"
+  },
+  "author": "Hasstrup Ezekiel",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "dataloader": "^1.4.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.1",
+    "graphql-tools": "^2.21.0",
+    "jsonwebtoken": "^8.2.0",
+    "mongoose": "^5.0.7",
+    "morgan": "^1.9.0",
+    "validator": "^9.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^3.0.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "mocha": "^5.0.1",
+    "rimraf": "^2.6.2",
+    "sinon": "^4.4.2"
+  }
+}
