@@ -8,7 +8,7 @@ const community = new Schema(
       required: true,
     },
 
-    descrition: {
+    description: {
       type: String,
       required: true,
       trim: true
