@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 
-const { Id } = Schema.Types
+const { ObjectId } = Schema.Types
 
 const messageSchema = new Schema({
   body: {
@@ -35,7 +35,7 @@ const messageSchema = new Schema({
 
   queries: [
     {
-      type: Id,
+      type: ObjectId,
       ref: 'Query',
     }
   ],
@@ -47,9 +47,10 @@ const messageSchema = new Schema({
 
   resources: [
     {
-      type: Id,
+      type: ObjectId,
       ref: 'Resource'
     }
   ],
-
 })
+
+const Message = model(messageSchema, 'Message')

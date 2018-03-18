@@ -39,7 +39,7 @@ describe('Error Handler Class', () => {
       }
     })
   })
-  console.log('hello')
+
   describe('another validation method', () => {
     it('should throw an error with hasstrupezekiel as username', async () => {
       const mock = {
