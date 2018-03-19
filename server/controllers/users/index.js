@@ -39,7 +39,7 @@ export const createuser = async (input) => {
 export const loginuser = async (email, password) => {
   const LoginHandler = new ErrorHandler(['email', 'password'])
   try {
-    const errors = LoginHandler({ email, password })
+    const errors = await LoginHandler.validate({ email, password })
     if (errors.passing) {
       const user = await User.findOne({ email })
       if (user && bcrypt.compareSync(password, user.password)) {
