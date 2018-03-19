@@ -36,4 +36,4 @@ const query = new Schema ({
 
 })
 
-const Query = model(query, 'Query')
+const Query = model('Query', query)

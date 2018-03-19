@@ -1,4 +1,4 @@
- const userType = `
+export const userType = `
   type User {
     _id: ID
     firstname: String
@@ -7,17 +7,8 @@
     username: String!
     email: String!
     followers: [User]
-    friends: [User] 
+    friends: [User]
     token: String
-  }
-  type Query {
-    user(username: String): User
-    users: [User]
-  }
-  type Mutation {
-    signup(user: UserInput): User
-    login(email: String! password: String!): User
-
   }
   input UserInput {
     firstname: String!
@@ -26,5 +17,14 @@
     email: String!
     password: String!
   }
-`
-export default userType
+`;
+
+export const userQueries = `
+user(username: String): User
+users: [User]
+`;
+
+export const userMutations = `
+signup(user: UserInput): User
+login(email: String! password: String!): User
+`;

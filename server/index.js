@@ -9,6 +9,7 @@ import typeDefs from './graphql/root-query'
 import resolvers from './graphql'
 import User from './models/user'
 import { valid } from './helpers/validator'
+import Community from './models/community'
 
 const app = express()
 dotenv.config()

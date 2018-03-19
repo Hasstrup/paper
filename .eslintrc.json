@@ -20,7 +20,8 @@
     "comma-dangle": 0,
     "curly": ["error", "multi-line"],
     "import/no-unresolved": [2, { "commonjs": true }],
-    "no-shadow": ["error", { "allow": ["req", "res", "err"] }]
+    "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   },
   "env": {
     "browser": true,

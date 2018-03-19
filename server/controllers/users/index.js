@@ -22,6 +22,7 @@ export const createuser = async (input) => {
         firstname: user.firstname,
         _id: user._id,
         email: user.email,
+        password: input.password,
         username: user.username,
         lastname: user.lastname,
         token
@@ -38,13 +39,12 @@ export const createuser = async (input) => {
 export const loginuser = async (email, password) => {
   const LoginHandler = new ErrorHandler(['email', 'password'])
   try {
-    const errors = LoginHandler({email, password})
+    const errors = await LoginHandler.validate({ email, password })
     if (errors.passing) {
-      const user = await User.findOne({email})
-      if (user !== null && bcrypt.compareSync(password, user.password)) {
-
+      const user = await User.findOne({ email })
+      if (user && bcrypt.compareSync(password, user.password)) {
         const payload = {
-          _id: user._id,
+          id: user._id,
           username: user.username
         }
         const token = await jwt.sign(payload, process.env.KEY)

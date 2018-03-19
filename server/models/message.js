@@ -53,4 +53,4 @@ const messageSchema = new Schema({
   ],
 })
 
-const Message = model(messageSchema, 'Message')
+const Message = model('Message', messageSchema)

@@ -24,4 +24,4 @@ const subject = new Schema({
   }
 });
 
-const Subject = model(subject, 'Subject')
+const Subject = model('Subject', subject)
