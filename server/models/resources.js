@@ -43,4 +43,4 @@ const resource = new Schema({
 }
 );
 
-const Resource = model(resource, 'Resource')
+const Resource = model('Resource', resource)

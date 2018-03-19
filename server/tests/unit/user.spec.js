@@ -31,9 +31,9 @@ describe('User controllers', () => {
         .then((data) => {
           expect(data).to.exist
           expect(data.token).to.exist
-          expect(jwt.sign(testuser, process.env.KEY)).to.equal(data.token)
+          // expect(JSON.stringify(jwt.sign(testuser, process.env.KEY))).to.equal(JSON.stringify(data.token))
           expect(bcrypt.compareSync(password, data.password)).to.be.true
-        })
+      })
         .catch((err) => {
           console.log(err)
         })

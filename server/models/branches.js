@@ -13,4 +13,4 @@ const branchSchema = new Schema({
   },
 })
 
-const Branch = model(branchSchema, 'Branch')
+const Branch = model('Branch', branchSchema)
