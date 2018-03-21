@@ -1,7 +1,9 @@
-import mongoose from 'mongoose'
-import { isEmail, isEmpty } from 'validator'
+import 'babel-polyfill'
+import mongoose from 'mongoose';
 
-const { Schema } = mongoose
+
+/* eslint func-names: [0, "as-needed"] */
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   firstname: String,
@@ -53,57 +55,56 @@ const userSchema = new Schema({
 
 userSchema.statics.checkname = async function (username) {
   try {
-    const user = await this.findOne({username})
+    const user = await this.findOne({ username });
     if (user) {
-      return true
+      return true;
     }
-  return false
-} catch (err) {
-   throw new Error(err)
+    return false;
+  } catch (err) {
+    throw new Error(err);
   }
-}
+};
 
 userSchema.statics.checkmail = async function (email) {
   try {
-    const user = await this.findOne({email})
+    const user = await this.findOne({ email });
     if (user) {
-      return true
+      return true;
     }
-  return false
-} catch (err) {
-   throw new Error(err)
+    return false;
+  } catch (err) {
+    throw new Error(err);
   }
-}
+};
 
 userSchema.statics.validator = async function (user) {
-  let arr = { passing: true, messages: []}
-  if (!user || !user.username || !user.email || (typeof user.email) !== 'string' || (typeof user.username) !== 'string')
-   {
-    arr.messages.push('Invalid input, please check the fields')
-    arr.passing = false
-    return arr
+  const arr = { passing: true, messages: [] };
+  if (!user || !user.username || !user.email || (typeof user.email) !== 'string' || (typeof user.username) !== 'string') {
+    arr.messages.push('Invalid input, please check the fields');
+    arr.passing = false;
+    return arr;
   }
 
   try {
-    const check1 = await this.checkname(user.username)
+    const check1 = await this.checkname(user.username);
     const check2 = await this.checkmail(user.email);
-    if(check1) {
-      arr.messages.push('The username is not available')
-      arr.passing = false
+    if (check1) {
+      arr.messages.push('The username is not available');
+      arr.passing = false;
     } if (check2) {
-      arr.messages.push('The email is not available')
-      arr.passing = false
+      arr.messages.push('The email is not available');
+      arr.passing = false;
     }
-    return arr
+    return arr;
   } catch (err) {
-    throw new Error(err)
+    throw new Error(err);
   }
-}
+};
 
 userSchema.statics.all = function (callback) {
-  this.find({}, (err, users) => callback(err, users))}
+  this.find({}, (err, users) => callback(err, users));
+};
 
 
-const User = mongoose.model('User', userSchema)
-
-module.exports = User
+const User = mongoose.model('User', userSchema);
+export default User

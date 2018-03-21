@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 const query = new Schema ({
 
@@ -36,4 +36,5 @@ const query = new Schema ({
 
 })
 
-const Query = model('Query', query)
+const Query = mongoose.model('Query', query)
+export default Query

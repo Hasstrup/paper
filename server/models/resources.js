@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 const resource = new Schema({
   author: {
@@ -24,7 +24,7 @@ const resource = new Schema({
     ref: 'Query'
   }],
 
-  votes: [Number],
+  votes: Number,
 
   reference: {
     type: Schema.Types.ObjectId,
@@ -43,4 +43,5 @@ const resource = new Schema({
 }
 );
 
-const Resource = model('Resource', resource)
+const Resource = mongoose.model('Resource', resource)
+export default Resource

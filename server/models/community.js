@@ -1,4 +1,7 @@
+import 'babel-polyfill'
 import mongoose from 'mongoose'
+import User from './user'
+import ValidationError from '../helpers/validator'
 
 const { Schema } = mongoose
 
@@ -29,7 +32,7 @@ const commSchema = new Schema({
   members: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     }
   ],
 
@@ -115,5 +118,31 @@ const commSchema = new Schema({
 }
 );
 
-const Community = mongoose.model('Community', commSchema)
-export default Community
+/* eslint func-names: [0, "as-needed"] */
+commSchema.methods.addMember = async function (_id) {
+  try {
+    const user = await User.findOne({ _id });
+    if (user) {
+      const members = this.members.map(item => item.toString());
+      if (!members.includes(_id)) {
+        this.members.push(user._id);
+        const communities = user.communities.map(item => item.toString())
+        if (!communities.includes(this._id)) {
+          user.communities.push(this._id) }
+        await user.save()
+        await this.save();
+        return this;
+      }
+      throw new ValidationError({ db: 'Youre already in the group big fella' });
+    }
+    throw new ValidationError({ db: 'Sorry we dont recognize this user' });
+  } catch (err) {
+    if (err.state.db) {
+      throw new ValidationError({ db: err.state.db });
+    }
+    throw new ValidationError({ db: err.message });
+  }
+};
+
+const Community = mongoose.model('Community', commSchema);
+export default Community;
