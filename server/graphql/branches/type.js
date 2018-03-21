@@ -1,5 +1,5 @@
 const branchType = `
-  type Branch = {
+  type Branch {
     parent: Community
     community: Community
   }

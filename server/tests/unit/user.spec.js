@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import sinon from 'sinon';
-import { createuser, SignUpHandler, loginuser, LoginHandler } from '../../controllers/users';
+import { createuser, SignUpHandler, loginuser, LoginHandler, fetchuser } from '../../controllers/users';
 import User from '../../models/user';
 
 dotenv.config();
@@ -76,10 +76,10 @@ describe('User controllers', () => {
       try {
         const user = await loginuser('hasstrup.ezekiel@gmail.com', 'Onosetale32');
         expect(user).to.have.property('token');
-        const data = await jwt.verify(user.token, process.env.KEY)
-        expect(data).to.not.be.undefined
-        expect(data.id).to.equal("5aaf7f6c9cbf9b677c2150f9")
-        expect(data.username).to.equal("hasstrupezekiel")
+        const data = await jwt.verify(user.token, process.env.KEY);
+        expect(data).to.not.be.undefined;
+        expect(data.id).to.equal("5aaf7f6c9cbf9b677c2150f9");
+        expect(data.username).to.equal("hasstrupezekiel");
       } catch (err) {
         const user = await loginuser('hasstrup.ezekiel@gmail.com', 'Onosetale32');
       }
@@ -111,6 +111,41 @@ describe('User controllers', () => {
       } catch (err) {
         expect(err).to.exist;
         expect(err.state.db[0]).to.equal('Sorry we dont recognize this user');
+      }
+    });
+  });
+
+  describe('Fectchuser controller (successcase)', () => {
+
+    it('should return a user object with corresponding test', async () => {
+      try {
+        const user = await fetchuser('hasstrupezekiel');
+        expect(user).to.be.an('object');
+        expect(user.firstname).to.equal('Hasstrup');
+        expect(user.email).to.equal('hasstrup.ezekiel@gmail.com');
+      } catch (err) {
+        expect(err).to.be.undefined;
+      }
+    });
+
+  });
+
+  describe('Fetchuser controller (failure cases)', () => {
+    it('should throw an error with invalid datatype', async () => {
+      try {
+        return await fetchuser(12);
+      } catch (err) {
+        expect(err).to.exist;
+        expect(err.state.input).to.equal('Please send in a valid input');
+      }
+    });
+
+    it('should throw an error with a wrong username', async () => {
+      try {
+        return await fetchuser('thisisatestusername');
+      } catch (err) {
+        expect(err).to.exist;
+        expect(err.state.db).to.exist
       }
     });
   });

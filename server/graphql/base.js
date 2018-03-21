@@ -16,7 +16,7 @@ const typeDefs = `
   ${communityTypes}
 
   type Query {
-    viewer(token: ID!): User
+    viewer(token: ID): User
     ${userQueries}
     ${communityQueries}
   }

@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 const context = {
-  currentuser: null,
+  viewer: null,
   loaders,
 }
 
