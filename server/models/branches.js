@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const branchSchema = new Schema({
   parent: {
@@ -13,4 +13,5 @@ const branchSchema = new Schema({
   },
 })
 
-const Branch = model('Branch', branchSchema)
+const Branch = mongoose.model('Branch', branchSchema);
+export default Branch

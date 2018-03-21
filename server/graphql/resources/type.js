@@ -4,10 +4,9 @@ const resourceType = `
     content: String
     title: String
     queries: [queryType]
-    votes: Number
+    votes: Int
     reference: Message
     type: String
-    created_at: Date
   }
 `;
 

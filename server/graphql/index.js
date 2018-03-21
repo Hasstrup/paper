@@ -1,17 +1,26 @@
-import { getUser, signup, allUsers } from './user/resolver'
+import { user, users, signup, login, viewer } from './user/resolver'
+import { queries, branches, members, communities, community, resources, publisher } from './community/resolver'
 
 const resolvers = {
-  Query: {
-    user: (obj, args, context) => getUser(obj, args)
-      .then(user => user),
+  Community: {
+    publisher,
+    queries,
+    branches,
+    members,
+    resources,
+  },
 
-    users: (obj, args, context) => allUsers()
-      .then(users => users)
-      .catch(err => err)
+  Query: {
+    user,
+    users,
+    viewer,
+    communities,
+    community
   },
 
   Mutation: {
     signup,
+    login,
   }
 }
 
