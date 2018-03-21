@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
-const subject = new Schema({
+const subSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -24,4 +24,5 @@ const subject = new Schema({
   }
 });
 
-const Subject = model('Subject', subject)
+const Subject = mongoose.model('Subject', subSchema)
+export default Subject

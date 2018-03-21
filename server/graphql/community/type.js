@@ -16,7 +16,7 @@ export const communityTypes = `
     tags: [String]
     blacklist: [String]
     branches: [Branch]
-    queries: [Query]
+    queries: [queryType]
     inclusion: Inclusion
     timestamps: String
     likes: Int

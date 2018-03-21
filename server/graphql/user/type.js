@@ -9,6 +9,7 @@ export const userType = `
     followers: [User]
     friends: [User]
     token: String
+    communities: [Community]
   }
   input UserInput {
     firstname: String!

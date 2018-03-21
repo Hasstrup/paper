@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import { expect } from 'chai'
 import { spy, stub } from 'sinon'
 import Community from '../../models/community'
+import User from '../../models/user'
 import { createCommunity, joinCommunity, fetchCommunity, fetchCommunities } from '../../controllers/community/index'
 
 mongoose.connect('mongodb://localhost/paperstack-c', {
@@ -65,8 +66,11 @@ describe('Community Controllers', () => {
     after(async () => {
       try {
         const test = await Community.findById('5aafa3e2373c5348310513fd');
+        const user = await User.findById('5aaf7f6c9cbf9b677c2150f9')
         test.members = [];
+        user.communities = [];
         await test.save();
+        await user.save();
       } catch (err) {
         expect(err).to.be.undefined;
       }
@@ -106,7 +110,7 @@ describe('Community Controllers', () => {
         const data = {
           id: null,
           username: 'boompowpow'
-        }
+        };
         const token = await jwt.sign(data, process.env.KEY);
         await joinCommunity(token, "5aafa3e2373c5348310513fd");
       } catch (err) {
