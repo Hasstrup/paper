@@ -4,7 +4,7 @@ export const communityTypes = `
   type Community {
     title: String
     description: String
-    _id: String
+    id: String
     welcome: String
     publisher: User
     members: [User]
@@ -40,9 +40,9 @@ export const communityQueries = `
 `;
 
 export const communityMutations = `
-newCommunity(token: String, input: CommunityInput): Community
-joinCommunity(token: String, community: ID): Community
-leaveCommunity(token: String, community: ID): User
+newcommunity(input: CommunityInput): Community
+joincommunity(token: String, community: ID): Community
+leavecommunity(token: String, community: ID): User
 invokePrivilege(token: String, community: ID): Community
 revokePrivilege(token: String, community: ID): Community
 deleteCommunity(token: String): Community

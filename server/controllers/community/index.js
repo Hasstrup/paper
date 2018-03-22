@@ -9,11 +9,21 @@ dotenv.config();
 
 export const createCommunity = async (token, input) => {
   try {
-    const { id } = await jwt.verify(token, process.env.KEY);
-    const community = await Community.create({ ...input, publisher: id });
-    return community;
+    const createHandler = new ErrorHandler(['title', 'publisher', 'description'])
+    if (token && input && (typeof token === 'string') && (typeof input === 'object')) {
+
+      const { id } = await jwt.verify(token, process.env.KEY)
+      const errors = await createHandler.validate({ ...input, publisher: id });
+      if (errors.passing) {
+        const { id } = await jwt.verify(token, process.env.KEY);
+        const community = await Community.create({ ...input, publisher: id });
+        return community;
+      }
+      throw new ValidationError(errors);
+    }
+    throw new ValidationError({ input: 'Something must be wrong with the input sent' });
   } catch (err) {
-    throw new Error(err ? err : err.message);
+    throw new ValidationError(err.state ? err.state : err.message)
   }
 };
 
@@ -34,10 +44,10 @@ export const joinCommunity = async (token, communityID) => {
     joinHandler.refresh();
     throw new ValidationError(errors);
   } catch (err) {
-    if (err.state.db) {
-      throw new ValidationError({ err: err.state.db });
+    if (err.state) {
+      throw new ValidationError(err.state);
     }
-    throw new ValidationError({ err: err.state ? err.state : err.message });
+    throw new ValidationError(err.message);
   }
 };
 

@@ -8,6 +8,7 @@ export const signup = async (obj, args, context) => {
   const { user } = args;
   try {
     const data = await createuser(user);
+    context.token = data.token;
     context.viewer = data;
     return data;
   } catch (err) {
@@ -15,10 +16,11 @@ export const signup = async (obj, args, context) => {
   }
 };
 
-export const login = async (obj, args, context, info) => {
+export const login = async (obj, args, context) => {
   const { email, password } = args;
   try {
     const data = await loginuser(email, password);
+    context.token = data.token;
     context.viewer = data;
     return data;
   } catch (err) {
@@ -26,7 +28,7 @@ export const login = async (obj, args, context, info) => {
   }
 };
 
-export const user = async (obj, args, context, info) => {
+export const user = async (obj, args) => {
   try {
     return await fetchuser(args.username);
   } catch (err) {
@@ -34,13 +36,13 @@ export const user = async (obj, args, context, info) => {
   }
 };
 
-export const users = async (obj, args, context) => {
+export const users = async () => {
   try {
     return await User.all();
   } catch (err) {
     throw new ValidationError(err.state);
   }
-}
+};
 
 export const viewer = async (obj, args, context) => {
   if (args.token) {
@@ -49,4 +51,4 @@ export const viewer = async (obj, args, context) => {
     context.viewer = currentuser;
   }
   return context.viewer;
-}
+};

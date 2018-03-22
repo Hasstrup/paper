@@ -1,8 +1,9 @@
 import { user, users, signup, login, viewer } from './user/resolver'
-import { queries, branches, members, communities, community, resources, publisher } from './community/resolver'
+import { queries, branches, members, communities, community, resources, publisher, newcommunity, id, joincommunity } from './community/resolver'
 
 const resolvers = {
   Community: {
+    id,
     publisher,
     queries,
     branches,
@@ -21,6 +22,8 @@ const resolvers = {
   Mutation: {
     signup,
     login,
+    newcommunity,
+    joincommunity
   }
 }
 
