@@ -27,6 +27,7 @@ const commSchema = new Schema({
   publisher: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required: true
   },
 
   members: [

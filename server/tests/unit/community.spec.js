@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost/paperstack-c', {
 /* eslint no-unused-expressions: [0, { "allowShortCircuit": true, "allowTernary": true }] */
 
 describe('Community Controllers', () => {
-  describe('Create community controller', () => {
+  describe('Create community controller (success case)', () => {
     const createstub = stub(Community, 'create');
     before(() => {
       createstub.resolves({
@@ -34,6 +34,7 @@ describe('Community Controllers', () => {
       const community = {
         title: 'A discussion on the future of technology',
         description: 'simple event on the future',
+        publisher: '123456'
       };
       const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYWY3ZjZjOWNiZjliNjc3YzIxNTBmOSIsInVzZXJuYW1lIjoiaGFzc3RydXBlemVraWVsIiwiaWF0IjoxNTIxNDUwODYwfQ.J9GGk-2RBqLyq5TkvKWMeASfnCBVmiFg6aXqlhjFpUA';
       try {
@@ -48,6 +49,28 @@ describe('Community Controllers', () => {
         expect(err).to.be.undefined;
       }
     });
+  });
+
+  describe('createCommunity (failure cases)', () => {
+
+    it('should throw an error with missing params', async () => {
+      try {
+        return await createCommunity('token');
+      } catch (err) {
+        expect(err).to.exist;
+        expect(err.state).to.be.an('object');
+      }
+    });
+
+    it('should throw an error with missing fields', async () => {
+      try {
+        return await createCommunity('token', {title: 'nada', description: 'nothing'});
+      } catch (err) {
+        expect(err).to.exist;
+        expect(err.state.input).to.exist;
+      }
+    });
+    
   });
 
 

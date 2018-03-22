@@ -18,6 +18,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 const context = {
   viewer: null,
   loaders,
+  token: null
 }
 
 app.use('/graphql', graphqlHTTP({

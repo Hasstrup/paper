@@ -82,10 +82,3 @@ export const fetchuser = async (username) => {
   }
   throw new ValidationError({ input: 'Please send in a valid input' });
 };
-
-
-// export const fetchUsers = () => {
-//   return new Promise((resolve, reject) => {
-//     User.find
-//   })
-// }
