@@ -13,26 +13,32 @@ export const publisher = async (obj, args, context) => {
 };
 
 export const members = async (obj, args, context) => {
-  return await Promise.all(obj.members.map(async (id) => {
-    return await context.loaders.userloader.load(id);
+  return await Promise.all(obj.members.map(async (key) => {
+    return await context.loaders.userloader.load(key);
   }));
 };
 
 export const resources = async (obj, args, context) => {
-  return await Promise.all(obj.resources.map(async (id) => {
-    return await context.loaders.resourceloader.load(id);
+  return await Promise.all(obj.resources.map(async (key) => {
+    return await context.loaders.resourceloader.load(key);
   }));
 };
 
 export const branches = async (obj, args, context) => {
-  return await Promise.all(obj.branches.map(async (id) => {
-    return await context.loaders.branchloader.load(id);
+  return await Promise.all(obj.branches.map(async (key) => {
+    return await context.loaders.branchloader.load(key);
   }));
 };
 
 export const queries = async (obj, args, context) => {
-  return await Promise.all(obj.queries.map(async (id) => {
-    return await context.loaders.queryloader.load(id);
+  return await Promise.all(obj.queries.map(async (key) => {
+    return await context.loaders.queryloader.load(key);
+  }));
+};
+
+export const messages = async (obj, args, context) => {
+  return await Promise.all(obj.messages.map(async (key) => {
+    return await context.loaders.messageloader.load(key);
   }));
 };
 
@@ -62,7 +68,7 @@ export const newcommunity = async (obj, args, context) => {
 
 export const joincommunity = async (obj, args, context) => {
   try {
-    const token = args.token ? args.token : context.token
+    const token = args.token ? args.token : context.token;
     return await joinCommunity(token, args.community);
   } catch (err) {
     throw new ValidationError(err.state);

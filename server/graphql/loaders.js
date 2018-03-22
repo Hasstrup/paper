@@ -4,6 +4,7 @@ import Query from '../models/queries';
 import Resource from '../models/resources';
 import User from '../models/user';
 import Branch from '../models/branches';
+import Message from '../models/message'
 
 /* eslint no-return-await: 0 */
 
@@ -23,6 +24,7 @@ const queryloader = new Dataloader(keys => batchingFunction(keys, Query));
 const resourceloader = new Dataloader(keys => batchingFunction(keys, Resource))
 const userloader = new Dataloader(keys => batchingFunction(keys, User))
 const branchloader = new Dataloader(keys => batchingFunction(keys, Branch))
+const messageloader = new Dataloader(keys => batchingFunction(keys, Message))
 
 export const loaders = {
   subjectloader,

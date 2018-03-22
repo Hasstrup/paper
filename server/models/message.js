@@ -1,6 +1,7 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
+import type from '../helpers/type'
+import ValidationError from '../helpers/validator';
 
-const { ObjectId } = Schema.Types
 
 const messageSchema = new Schema({
   body: {
@@ -15,7 +16,7 @@ const messageSchema = new Schema({
   },
 
   type: {
-    type: String,
+    type: Number,
     required: true,
     index: true
   },
@@ -35,7 +36,7 @@ const messageSchema = new Schema({
 
   queries: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Query',
     }
   ],
@@ -47,10 +48,24 @@ const messageSchema = new Schema({
 
   resources: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Resource'
     }
   ],
 })
 
-const Message = model('Message', messageSchema)
+/* eslint func-names: [0, "as-needed"] */
+messageSchema.methods.dispatch = async function () {
+  try {
+    const parent = await type(this.type).findById(this.destination);
+    parent.messages.push(this);
+    return parent;
+  } catch (err) {
+    if (err.state) {
+      throw new ValidationError(err.state);
+    }
+    throw new ValidationError({ db: err.message });
+  };
+};
+const Message = mongoose.model('Message', messageSchema)
+export default Message

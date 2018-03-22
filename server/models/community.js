@@ -1,7 +1,7 @@
-import 'babel-polyfill'
-import mongoose from 'mongoose'
-import User from './user'
-import ValidationError from '../helpers/validator'
+import 'babel-polyfill';
+import mongoose from 'mongoose';
+import User from './user';
+import ValidationError from '../helpers/validator';
 
 const { Schema } = mongoose
 

@@ -23,7 +23,10 @@ export const createCommunity = async (token, input) => {
     }
     throw new ValidationError({ input: 'Something must be wrong with the input sent' });
   } catch (err) {
-    throw new ValidationError(err.state ? err.state : err.message)
+    if (err.state) {
+      throw new ValidationError(err.state);
+    }
+    throw new ValidationError({ db: err.message });
   }
 };
 
@@ -47,7 +50,7 @@ export const joinCommunity = async (token, communityID) => {
     if (err.state) {
       throw new ValidationError(err.state);
     }
-    throw new ValidationError(err.message);
+    throw new ValidationError({ db: err.message });
   }
 };
 

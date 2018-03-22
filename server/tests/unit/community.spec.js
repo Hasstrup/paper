@@ -8,6 +8,7 @@ import { createCommunity, joinCommunity, fetchCommunity, fetchCommunities } from
 
 mongoose.connect('mongodb://localhost/paperstack-c', {
 });
+const testcommunity = "5ab2edfcafa1375593aa1d46"
 
 /* eslint no-unused-expressions: [0, { "allowShortCircuit": true, "allowTernary": true }] */
 
@@ -26,7 +27,7 @@ describe('Community Controllers', () => {
     });
 
     after(() => {
-      createstub.restore()
+      createstub.restore();
     });
 
 
@@ -67,10 +68,10 @@ describe('Community Controllers', () => {
         return await createCommunity('token', {title: 'nada', description: 'nothing'});
       } catch (err) {
         expect(err).to.exist;
-        expect(err.state.input).to.exist;
+        expect(err.state.db).to.exist;
       }
     });
-    
+
   });
 
 
@@ -78,7 +79,7 @@ describe('Community Controllers', () => {
 
     before(async () => {
       try {
-        const test = await Community.findById('5aafa3e2373c5348310513fd');
+        const test = await Community.findById(testcommunity);
         test.members = [];
         await test.save();
       } catch (err) {
@@ -88,7 +89,7 @@ describe('Community Controllers', () => {
 
     after(async () => {
       try {
-        const test = await Community.findById('5aafa3e2373c5348310513fd');
+        const test = await Community.findById(testcommunity);
         const user = await User.findById('5aaf7f6c9cbf9b677c2150f9')
         test.members = [];
         user.communities = [];
@@ -106,7 +107,7 @@ describe('Community Controllers', () => {
           username: 'hasstrupezekiel'
         };
         const token = await jwt.sign(data, process.env.KEY);
-        const comm = await joinCommunity(token, "5aafa3e2373c5348310513fd");
+        const comm = await joinCommunity(token, testcommunity);
         expect(comm.members).to.not.be.undefined;
         expect(comm.members).to.be.an('array');
         expect(comm.members.indexOf(data.id)).to.not.equal(-1);
@@ -124,7 +125,7 @@ describe('Community Controllers', () => {
       } catch (err) {
         expect(err).to.exist;
         expect(err).to.have.property('state');
-        expect(err.state.err.token).to.be.an('array');
+        expect(err.state.token).to.be.an('array');
       }
     });
 
@@ -135,17 +136,17 @@ describe('Community Controllers', () => {
           username: 'boompowpow'
         };
         const token = await jwt.sign(data, process.env.KEY);
-        await joinCommunity(token, "5aafa3e2373c5348310513fd");
+        await joinCommunity(token, testcommunity);
       } catch (err) {
         expect(err).to.exist;
-        expect(err.state.err).to.have.property('id');
-        expect(err.state.err.id).to.equal('Invalid token');
+        expect(err.state).to.have.property('id');
+        expect(err.state.id).to.equal('Invalid token');
       }
     });
 
     it('should throw an error if the user already exists', async () => {
       try {
-        const testcomm = await Community.findById("5aafa3e2373c5348310513fd");
+        const testcomm = await Community.findById(testcommunity);
         testcomm.members.push("5aaf7f6c9cbf9b677c2150f9");
         await testcomm.save();
         const testdata = {
@@ -153,11 +154,11 @@ describe('Community Controllers', () => {
           username: 'hasstrupezekiel'
         };
         const token = await jwt.sign(testdata, process.env.KEY);
-        await joinCommunity(token, "5aafa3e2373c5348310513fd");
+        await joinCommunity(token, testcommunity);
       } catch (err) {
         expect(err).to.exist;
-        expect(err.state.err).to.exist;
-        expect(err.state.err).to.equal('Youre already in the group big fella')
+        expect(err.state).to.exist;
+        expect(err.state.db).to.equal('Youre already in the group big fella')
       }
     });
   });
@@ -166,8 +167,7 @@ describe('Community Controllers', () => {
 
     it('should return a community object with data', async () => {
       try {
-        const test = '5aafa3e2373c5348310513fd';
-        const community = await fetchCommunity(test);
+        const community = await fetchCommunity(testcommunity);
         expect(community).to.be.an('object');
         expect(community.publisher.username).to.equal('hasstrupezekiel');
       } catch (err) {
