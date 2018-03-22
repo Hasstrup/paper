@@ -1,5 +1,6 @@
 import { user, users, signup, login, viewer } from './user/resolver'
-import { queries, branches, members, communities, community, resources, publisher, newcommunity, id, joincommunity } from './community/resolver'
+import { queries, branches, members, communities, community, resources, publisher, newcommunity, id, joincommunity } from './community/resolver';
+import { origin, destination, resources } from './messages/resolver'
 
 const resolvers = {
   Community: {
@@ -9,6 +10,12 @@ const resolvers = {
     branches,
     members,
     resources,
+  },
+
+  Message: {
+    origin,
+    destination,
+    resources
   },
 
   Query: {
