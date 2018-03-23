@@ -1,5 +1,6 @@
 import { fetchCommunities, fetchCommunity, createCommunity, joinCommunity } from '../../controllers/community/index'
 import ValidationError from '../../helpers/validator'
+import { sendmessage } from '../../controllers/messages'
 
 /* eslint no-return-await: 0 */
 /* eslint arrow-body-style: [0, "always"] */
@@ -74,3 +75,12 @@ export const joincommunity = async (obj, args, context) => {
     throw new ValidationError(err.state);
   }
 };
+
+export const addmessage = async (obj, args, context) => {
+  try {
+    const token = args.token ? args.token : context.token
+    return await sendmessage(token, args.input)
+  } catch (err) {
+    throw new ValidationError(err.state)
+  }
+}

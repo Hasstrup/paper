@@ -1,8 +1,23 @@
 import { user, users, signup, login, viewer } from './user/resolver'
-import { queries, branches, members, communities, community, resources, publisher, newcommunity, id, joincommunity } from './community/resolver';
-import { origin, destination, resources } from './messages/resolver'
+import { queries, branches, addmessage, members, messages, communities, community, resources, publisher, newcommunity, id, joincommunity } from './community/resolver';
+import { origin, destination, support } from './messages/resolver';
+import Destination from './messages/helper'
 
 const resolvers = {
+
+  Destination: {
+    id,
+    publisher,
+    queries,
+    branches,
+    members,
+    resources,
+    messages,
+    origin,
+    destination,
+    support
+  },
+
   Community: {
     id,
     publisher,
@@ -10,12 +25,13 @@ const resolvers = {
     branches,
     members,
     resources,
+    messages
   },
 
   Message: {
     origin,
     destination,
-    resources
+    support
   },
 
   Query: {
@@ -30,7 +46,8 @@ const resolvers = {
     signup,
     login,
     newcommunity,
-    joincommunity
+    joincommunity,
+    addmessage
   }
 }
 

@@ -59,6 +59,7 @@ messageSchema.methods.dispatch = async function () {
   try {
     const parent = await type(this.type).findById(this.destination);
     parent.messages.push(this);
+    await parent.save()
     return parent;
   } catch (err) {
     if (err.state) {

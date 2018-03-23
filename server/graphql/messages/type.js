@@ -1,3 +1,4 @@
+import { Type, communityType } from './helper'
 const messageType = `
   type Message {
     body: String
@@ -7,19 +8,19 @@ const messageType = `
     destination: Destination
     queries: [queryType]
     upvotes: Int
-    resources: [Resource]
+    support: [Resource]
   }
 
   input messageInput {
     body: String!
     title: String!
     destination: ID!
+    type: Int
   }
 
-  enum Destination {
-    Community
-    User
-    Message
-  }
-`
-export default messageType
+type Destination {
+  ${communityType}
+  ${Type}
+}
+`;
+export default messageType;

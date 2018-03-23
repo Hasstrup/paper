@@ -12,7 +12,7 @@ export const destination = async (obj, args, context) => {
   return await generateloader(obj.type, context, obj.destination);
 };
 
-export const resources = async (obj) => {
+export const support = async (obj) => {
   return await Promise.all(obj.resources.map(async (key) => {
     return await context.loaders.resourceloader.load(key);
   }));

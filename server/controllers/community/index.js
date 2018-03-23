@@ -75,7 +75,7 @@ export const fetchCommunity = async (communityID) => {
 
 export const fetchCommunities = async () => {
   try {
-    const communities = await Community.find({}).populate('publisher members');
+    const communities = await Community.find({})
     return communities;
   } catch (err) {
     throw new ValidationError({ err: err.message });
