@@ -1,13 +1,26 @@
+import { Type, communityType } from './helper'
 const messageType = `
   type Message {
     body: String
     title: String
     type: String
     origin: User
-    destination: ID
+    destination: Destination
     queries: [queryType]
     upvotes: Int
-    resources: [Resource]
+    support: [Resource]
   }
-`
-export default messageType
+
+  input messageInput {
+    body: String!
+    title: String!
+    destination: ID!
+    type: Int
+  }
+
+type Destination {
+  ${communityType}
+  ${Type}
+}
+`;
+export default messageType;

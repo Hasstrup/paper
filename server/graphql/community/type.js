@@ -42,6 +42,7 @@ export const communityQueries = `
 export const communityMutations = `
 newcommunity(input: CommunityInput): Community
 joincommunity(token: String, community: ID): Community
+addmessage(token: ID, input: messageInput): Community
 leavecommunity(token: String, community: ID): User
 invokePrivilege(token: String, community: ID): Community
 revokePrivilege(token: String, community: ID): Community
