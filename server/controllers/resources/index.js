@@ -18,7 +18,6 @@ export const pushresource = async (token, input) => {
     }
     throw new ValidationError({ input: 'Invalid or null input type' });
   } catch (err) {
-    console.log(err.state)
     if (err.state) {
       throw new ValidationError(err.state);
     }
