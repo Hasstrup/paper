@@ -9,7 +9,7 @@ const resolvers = {
   Resource: {
     author,
     destination
-  }
+  },
 
   Destination: {
     id,
