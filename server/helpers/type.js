@@ -2,6 +2,7 @@ import Community from '../models/community';
 import Message from '../models/message';
 import User from '../models/user'
 import ValidationError from './validator';
+import Subject from '../models/subjects'
 
 const type = (input) => {
   if (input && (typeof input === 'number')) {
@@ -14,6 +15,9 @@ const type = (input) => {
 
       case 3:
         return Message;
+
+      case 4:
+        return Subject
 
       default:
         return null;

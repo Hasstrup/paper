@@ -1,9 +1,15 @@
 import { user, users, signup, login, viewer } from './user/resolver'
 import { queries, branches, addmessage, members, messages, communities, community, resources, publisher, newcommunity, id, joincommunity } from './community/resolver';
 import { origin, destination, support } from './messages/resolver';
+import { addresource, author } from './resources/resolver';
 import Destination from './messages/helper'
 
 const resolvers = {
+
+  Resource: {
+    author,
+    destination
+  },
 
   Destination: {
     id,
@@ -47,7 +53,8 @@ const resolvers = {
     login,
     newcommunity,
     joincommunity,
-    addmessage
+    addmessage,
+    addresource
   }
 }
 

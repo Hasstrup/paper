@@ -1,4 +1,6 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose';
+import type from '../helpers/type';
+import ValidationError from '../helpers/validator';
 
 const resource = new Schema({
   author: {
@@ -24,15 +26,15 @@ const resource = new Schema({
     ref: 'Query'
   }],
 
-  votes: Number,
+  votes: { type: Number, default: 0 },
 
-  reference: {
+  destination: {
     type: Schema.Types.ObjectId,
     required: true
   },
 
   type: {
-    type: String,
+    type: Number,
     required: true,
     trim: true
   }
@@ -42,6 +44,21 @@ const resource = new Schema({
   timestamps: true
 }
 );
+/* eslint func-names: 0 */
+resource.methods.dispatch = async function () {
+  try {
+    const parent = await type(this.type).findById(this.destination);
+    parent.resources.push(this._id);
+    await parent.save();
+    if (parent.destination) {
+      return await type(parent.type).findById(parent.destination)
+    }
+    return parent;
+  }
+  catch (err) {
+    throw new ValidationError({ db: err.message})
+  }
+}
 
 const Resource = mongoose.model('Resource', resource)
 export default Resource

@@ -1,19 +1,26 @@
 import jwt from 'jsonwebtoken'
 import { expect } from 'chai';
 import { sendmessage } from '../../controllers/messages';
+import type from '../../helpers/type'
 
 const id = '5aaf7f6c9cbf9b677c2150f9';
 const username = 'hasstrupezekiel';
 const destination = '5ab2edfcafa1375593aa1d46';
+const input = { body: 'Hello there', title: 'Look at me', type: 2, destination, };
 
 /* eslint no-unused-expressions: [0, { "allowShortCircuit": true, "allowTernary": true }] */
 describe('Message Controllers', () => {
 
   describe('Create message controller (success case)', () => {
+    after(async () => {
+      const parent = await type(input.type).findById(input.destination);
+      parent.messages = [];
+      await parent.save();
+    });
     it('should return the successful parent with message populated in it', async () => {
       try {
         const payload = { id, username };
-        const input = { body: 'Hello there', title: 'Look at me', type: 2, destination, };
+
         const token = await jwt.sign(payload, process.env.KEY);
         const parent = await sendmessage(token, input);
         expect(parent).to.exist;

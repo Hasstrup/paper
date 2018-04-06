@@ -3,7 +3,7 @@ import branchType from './branches/type'
 import messageType from './messages/type'
 import subjectType from './subjects/type'
 import queryType from './queries/type';
-import resourceType from './resources/type'
+import resourceType, { resourceMutation } from './resources/type'
 import {communityTypes, communityQueries, communityMutations } from './community/type'
 
 const typeDefs = `
@@ -24,6 +24,7 @@ const typeDefs = `
   type Mutation {
     ${userMutations}
     ${communityMutations}
+    ${resourceMutation}
   }
 `
 export default typeDefs

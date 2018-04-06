@@ -23,7 +23,7 @@ describe('Type generator tests', () => {
     });
 
     it('should return null with a input number not registered', () => {
-      const model = type(4);
+      const model = type(10);
       expect(model).to.equal(null);
     });
   });

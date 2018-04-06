@@ -43,6 +43,8 @@ export const messages = async (obj, args, context) => {
   }));
 };
 
+
+
 // QUERIES
 
 export const communities = async () => {
